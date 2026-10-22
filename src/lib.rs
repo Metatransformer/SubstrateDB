@@ -2,6 +2,7 @@ pub mod auth;
 pub mod cache;
 pub mod cluster;
 pub mod cluster_storage;
+pub mod dashboard;
 pub mod documents;
 pub mod jobs;
 pub mod messaging;

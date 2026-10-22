@@ -2,6 +2,10 @@ FROM rust:1.87-bookworm AS build
 WORKDIR /build
 COPY Cargo.toml Cargo.lock ./
 COPY src ./src
+COPY build.rs README.md ./
+COPY docs ./docs
+COPY sdk/README.md ./sdk/README.md
+COPY dashboard/dist ./dashboard/dist
 RUN cargo build --locked --release --bin substrate
 
 FROM debian:bookworm-slim

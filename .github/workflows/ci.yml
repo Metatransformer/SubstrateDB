@@ -12,10 +12,21 @@ jobs:
         with:
           components: rustfmt, clippy
       - uses: Swatinem/rust-cache@v2
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: dashboard/package-lock.json
+      - run: npm ci && npm run build && npm run typecheck
+        working-directory: dashboard
       - run: cargo fmt --all -- --check
       - run: cargo clippy --locked --all-targets -- -D warnings
       - run: cargo test --locked --all-targets
       - run: cargo build --locked --bin substrate
+      - run: npx playwright install --with-deps chromium
+        working-directory: dashboard
+      - run: npm test
+        working-directory: dashboard
       - uses: actions/setup-node@v4
         with:
           node-version: 22

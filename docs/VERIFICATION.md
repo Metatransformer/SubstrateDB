@@ -19,3 +19,16 @@ The catch-up test found a 50 ms default append timeout incompatible with larger 
 [Raw search measurement](benchmarks/search-2000-32.json): 2,000 synthetic 32-dimensional vectors, 100 queries, seed 42, ef 128, release build, recall@10 1.0. The run shared its host with build activity. Graph p95 was 15.16 ms; exact p95 was 33.80 ms. See SEARCH.md for all parameters and limitations.
 
 No 1M/10M scale, sustained mixed-load, disk-failure, clock-jump or rolling-upgrade result is claimed. CI is configured for Linux and macOS. The Linux release tests were executed locally in Docker; no remote CI run is implied. See IMPLEMENTATION.md for remaining release gates.
+
+## Embedded dashboard — 2026-10-22
+
+Added a Next.js static dashboard compiled into the Rust binary, offline documentation routes, and a browser regression that starts its own isolated database. Verified:
+
+- Frontend production export and TypeScript checking.
+- Rust formatting, Clippy with warnings denied, and all 45 Rust tests (including embedded assets, offline docs, missing paths, and unauthenticated API rejection).
+- Chromium UI workflows: invalid/valid authentication, document creation and revision updates, a live WebSocket document watch, job enqueue/list, cache values including `false`, vector submission and search, schedule creation/list, retained events, raw commands, and documentation.
+- Namespace switching clears previous screen results; refresh clears credentials; no credentials enter local/session storage. Mobile navigation fits a 390px viewport.
+
+Run `npm --prefix dashboard run build`, `cargo build --locked --bin substrate`, then `npm --prefix dashboard test` after installing Chromium with `npm --prefix dashboard exec -- playwright install chromium`. Browser test data is temporary and removed after the test. The dashboard does not change the runtime's production qualification status.
+
+The Linux/aarch64 release Docker image also built successfully. A temporary container verified UID 10001, the dashboard HTML and referenced JavaScript, the embedded quickstart, and authenticated `scope.stats`; the container and its anonymous volume were removed afterward.

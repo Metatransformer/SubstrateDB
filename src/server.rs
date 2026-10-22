@@ -19,6 +19,7 @@ use std::{collections::BTreeMap, sync::atomic::Ordering, time::Duration};
 
 pub fn router(runtime: Runtime) -> Router {
     Router::new()
+        .merge(crate::dashboard::router())
         .route("/internal/realtime", post(relay))
         .route("/health", get(health))
         .route("/metrics", get(metrics))

@@ -169,6 +169,7 @@ async fn main() -> anyhow::Result<()> {
         tracing::info!(%path,"Substrate IPC listening");
     }
     tracing::info!(address=%listener.local_addr()?,%mode,"Substrate listening");
+    tracing::info!("Dashboard: http://{}/dashboard", listener.local_addr()?);
     let result = axum::serve(listener, router)
         .with_graceful_shutdown(async {
             let mut terminate =
