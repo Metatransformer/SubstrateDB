@@ -4,6 +4,10 @@ A Rust runtime for JSON documents, vector and keyword search, durable jobs, cron
 
 **Status: development implementation, not a production-qualified database.** Functional and failure tests are included. The approximate vector index is experimental; million-vector capacity, sustained mixed-load behavior, upgrades, and fleet-wide resource isolation have not been qualified. See [implementation status](docs/IMPLEMENTATION.md).
 
+[Documentation](https://substratedb-docs.vercel.app) · [Engineering story](https://metatransformer.com/blog/substratedb)
+
+The public Vercel site hosts documentation. The database runtime runs locally or on your own persistent servers.
+
 ## Run locally
 
 Requires Rust 1.87+. Node 22+ is needed for the TypeScript SDK, examples, and dashboard source development, but not for a normal Rust build: the compiled dashboard assets are checked in and embedded in the binary.

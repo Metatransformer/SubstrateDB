@@ -9,3 +9,8 @@ dashboard/node_modules
 dashboard/.next
 dashboard/out
 dashboard/*.tsbuildinfo
+
+.vercel
+docs-site/node_modules
+docs-site/.next
+docs-site/out

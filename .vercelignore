@@ -1,0 +1,14 @@
+.git
+.cargo
+target
+data
+dashboard
+sdk/node_modules
+sdk/dist
+docs-site/node_modules
+docs-site/.next
+docs-site/out
+*.redb
+*.redb.*
+.env
+.env.*
