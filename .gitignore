@@ -1,0 +1,8 @@
+/target/
+/data/
+/sdk/node_modules/
+/sdk/dist/
+*.redb
+*.redb.*
+.env
+.DS_Store

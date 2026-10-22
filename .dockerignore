@@ -1,0 +1,7 @@
+target
+data
+.git
+sdk/node_modules
+sdk/dist
+*.redb
+.env

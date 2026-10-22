@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SubstrateDB scoped realtime example</title>
+<style>
+  body { margin: 3rem auto; max-width: 48rem; padding: 0 1rem; font: 16px/1.5 system-ui, sans-serif; }
+  button { padding: .6rem 1rem; }
+  pre { min-height: 16rem; padding: 1rem; overflow: auto; background: #111; color: #d8ffd8; }
+</style>
+<h1>Scoped realtime channel</h1>
+<p>The browser fetches a short-lived capability from this application server. The admin credential and signing key never enter this page.</p>
+<button id="publish" disabled>Publish event</button>
+<pre id="log"></pre>
+<script type="module">
+  const log = document.querySelector('#log');
+  const publish = document.querySelector('#publish');
+  const write = value => { log.textContent += `${JSON.stringify(value)}\n`; };
+  const { token, expires_at_ms: expiresAt, url } = await fetch('/token', { cache: 'no-store' }).then(response => response.json());
+  const wsUrl = new URL('/v1/ws', url);
+  wsUrl.protocol = wsUrl.protocol === 'https:' ? 'wss:' : 'ws:';
+  const socket = new WebSocket(wsUrl);
+
+  socket.addEventListener('open', () => socket.send(JSON.stringify({ type: 'auth', token })));
+  socket.addEventListener('message', event => {
+    const message = JSON.parse(event.data);
+    write(message);
+    if (message.type === 'authenticated') {
+      socket.send(JSON.stringify({ type: 'channel', topic: 'demo.events' }));
+      publish.disabled = false;
+    }
+  });
+  socket.addEventListener('close', () => { publish.disabled = true; write({ type: 'closed' }); });
+  publish.addEventListener('click', () => socket.send(JSON.stringify({
+    type: 'publish',
+    topic: 'demo.events',
+    payload: { sentAt: new Date().toISOString() },
+  })));
+  setTimeout(() => socket.close(), Math.max(0, expiresAt - Date.now()));
+</script>
+</html>

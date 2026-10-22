@@ -1,0 +1,31 @@
+{
+  "parameters": {
+    "count": 2000,
+    "dimensions": 32,
+    "ef": 128,
+    "k": 10,
+    "queries": 100
+  },
+  "platform": {
+    "arch": "aarch64",
+    "build_profile": "release",
+    "logical_cpus": 12,
+    "os": "macos"
+  },
+  "results": {
+    "exact_search_latency_ms": {
+      "p50": 21.613083000000003,
+      "p95": 33.799707999999995,
+      "p99": 44.30875
+    },
+    "graph_search_latency_ms": {
+      "p50": 8.9885,
+      "p95": 15.15525,
+      "p99": 20.455541
+    },
+    "indexing_time_ms": 13766.63525,
+    "insertion_submission_time_ms": 21065.158292,
+    "recall_at_10": 1.0
+  },
+  "seed": 42
+}

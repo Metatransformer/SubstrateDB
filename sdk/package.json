@@ -1,0 +1,14 @@
+{
+  "name": "@substratedb/client",
+  "version": "0.1.0",
+  "description": "Native TypeScript client for SubstrateDB",
+  "type": "module",
+  "license": "Apache-2.0",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": { ".": { "types": "./dist/index.d.ts", "import": "./dist/index.js" } },
+  "files": ["dist"],
+  "scripts": { "build": "tsc", "typecheck": "tsc --noEmit", "test": "npm run build && node --test test/*.test.mjs" },
+  "dependencies": { "zod": "^3.24.0" },
+  "devDependencies": { "typescript": "^5.8.0", "@types/node": "^22.0.0" }
+}
